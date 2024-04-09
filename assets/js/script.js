@@ -69,3 +69,57 @@ function getWeather(city) {
 function displayWeather(cityName, temperature) {
     document.getElementById('weather-info').innerHTML = `<p>City: ${cityName}</p><p>Temperature: ${temperature}°F</p>`;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('search-form');
+    const historyList = document.getElementById('history-list');
+
+    // Load search history from local storage when the page is loaded
+    loadHistory();
+
+    // Add event listener to the form submission
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Get the city name entered by the user
+        const cityInput = document.getElementById('city-input').value.trim();
+
+        // Call the getWeather function with the city name
+        getWeather(cityInput);
+
+        // Add the city to the search history
+        addToHistory(cityInput);
+    });
+
+    // Function to add a city to the search history
+    function addToHistory(city) {
+        // Create a new list item
+        const listItem = document.createElement('li');
+        listItem.textContent = city;
+
+        // Add the list item to the history list
+        historyList.appendChild(listItem);
+
+        // Save the updated search history to local storage
+        saveHistory();
+    }
+
+    // Function to load search history from local storage
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+        // Loop through the search history and add each city to the list
+        history.forEach(function(city) {
+            addToHistory(city);
+        });
+    }
+
+    // Function to save search history to local storage
+    function saveHistory() {
+        const historyItems = Array.from(historyList.children).map(function(item) {
+            return item.textContent;
+        });
+
+        localStorage.setItem('searchHistory', JSON.stringify(historyItems));
+    }
+});
