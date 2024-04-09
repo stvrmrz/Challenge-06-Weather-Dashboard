@@ -25,11 +25,11 @@ function getCoordinates(city) {
 getCoordinates('New York');
   
 
-// This function essentially fetches weather data for a specified city using the OpenWeatherMap API
-// and logs them to the console. It also handles errors that may occur during the fetch operation.
+// This function fetches weather data for a specified city using the OpenWeatherMap API
+// and displays the city name and current temperature in Fahrenheit.
 function getWeather(city) {
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
 
     fetch(apiUrl)
         .then(function(response) {
@@ -39,7 +39,9 @@ function getWeather(city) {
             return response.json();
         })
         .then(function(data) {
-            console.log(`Weather data for ${city}:`, data);
+            const cityName = data.name;
+            const temperature = data.main.temp;
+            document.getElementById('weather-info').innerHTML = `<p>City: ${cityName}</p><p>Temperature: ${temperature}°F</p>`;
         })
         .catch(function(error) {
             console.error(`There was a problem with the fetch operation for ${city}:`, error);
