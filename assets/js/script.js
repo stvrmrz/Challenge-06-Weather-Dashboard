@@ -40,25 +40,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // This function fetches weather data for a specified city using the OpenWeatherMap API
 // and displays the city name and current temperature in Fahrenheit.
-function getWeather(lat, lon) {
+function getWeather(lat, lon, city) {
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  
     fetch(apiUrl)
         .then(function(response) {
             if (!response.ok) {
-                throw new Error(`Network response was not ok for ${city}`);
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(function(data) {
-            const cityName = data.timezone;
-            const temperature = data.current.temp;
-            // Call the displayWeather function to display weather information
-            displayWeather(cityName, temperature);
+            displayWeather(data, city);
         })
         .catch(function(error) {
-            console.error(`There was a problem with the fetch operation for ${city}:`, error);
+            console.error('There was a problem with the fetch operation:', error);
         });
 }
 
