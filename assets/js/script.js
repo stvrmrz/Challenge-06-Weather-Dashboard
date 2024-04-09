@@ -22,7 +22,7 @@ function getCoordinates(city) {
         });
 }
 
-getCoordinates('New York');
+//getCoordinates('New York');
   
 
 // This function fetches weather data for a specified city using the OpenWeatherMap API
@@ -41,7 +41,8 @@ function getWeather(city) {
         .then(function(data) {
             const cityName = data.name;
             const temperature = data.main.temp;
-            document.getElementById('weather-info').innerHTML = `<p>City: ${cityName}</p><p>Temperature: ${temperature}°F</p>`;
+            // Call the displayWeather function to display weather information
+            displayWeather(cityName, temperature);
         })
         .catch(function(error) {
             console.error(`There was a problem with the fetch operation for ${city}:`, error);
@@ -49,3 +50,8 @@ function getWeather(city) {
 }
 
 getWeather('New York')
+
+// Function to display weather information for a specified city
+function displayWeather(cityName, temperature) {
+    document.getElementById('weather-info').innerHTML = `<p>City: ${cityName}</p><p>Temperature: ${temperature}°F</p>`;
+}
