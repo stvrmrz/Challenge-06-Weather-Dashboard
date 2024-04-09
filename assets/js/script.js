@@ -15,9 +15,8 @@ function getCoordinates(city) {
         .then(function(data) {
             const lat = data.coord.lat;
             const lon = data.coord.lon;
-            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
-            // Call the getWeather function with the coordinates
-            getWeather(lat, lon);
+            getWeather(lat, lon, city);
+            addToHistory(city);
         })
         .catch(function(error) {
             console.error('There was a problem with the fetch operation:', error);
