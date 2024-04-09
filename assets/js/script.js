@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // and displays the city name and current temperature in Fahrenheit.
 function getWeather(city) {
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
     fetch(apiUrl)
         .then(function(response) {
