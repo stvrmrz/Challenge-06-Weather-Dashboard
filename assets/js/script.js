@@ -20,7 +20,30 @@ function getCoordinates(city) {
         .catch(function(error) {
             console.error('There was a problem with the fetch operation:', error);
         });
-  }
+}
 
-  getCoordinates('New York');
+getCoordinates('New York');
   
+
+// This function essentially fetches weather data for a specified city using the OpenWeatherMap API
+// and logs them to the console. It also handles errors that may occur during the fetch operation.
+function getWeather(city) {
+    const apiKey = 'b93acfb12967de0cf2063193b0042830';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok for ${city}`);
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            console.log(`Weather data for ${city}:`, data);
+        })
+        .catch(function(error) {
+            console.error(`There was a problem with the fetch operation for ${city}:`, error);
+        });
+}
+
+getWeather('New York')
