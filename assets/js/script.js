@@ -24,6 +24,20 @@ function getCoordinates(city) {
 
 //getCoordinates('New York');
   
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('search-form');
+
+    // Add event listener to the form submission
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Get the city name entered by the user
+        const cityInput = document.getElementById('city-input').value.trim();
+
+        // Call the getWeather function with the city name
+        getWeather(cityInput);
+    });
+});
 
 // This function fetches weather data for a specified city using the OpenWeatherMap API
 // and displays the city name and current temperature in Fahrenheit.
@@ -49,7 +63,7 @@ function getWeather(city) {
         });
 }
 
-getWeather('New York')
+//getWeather('New York')
 
 // Function to display weather information for a specified city
 function displayWeather(cityName, temperature) {
