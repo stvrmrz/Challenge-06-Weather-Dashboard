@@ -1,24 +1,35 @@
-// This function essentially fetches weather data for a specified city using the OpenWeatherMap API,
-// extracts the latitude and longitude coordinates from the response, and logs them to the console. 
-// It also handles errors that may occur during the fetch operation.
+// The function getCoordinates(city) fetches weather data for a specified city from the OpenWeatherMap 
+// API, extracts the latitude and longitude from the response, displays the weather information using 
+// the getWeather(lat, lon, city) function, and adds the city to the search history.
+
 function getCoordinates(city) {
+    // API key for accessing OpenWeatherMap API
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
+    // URL for fetching weather data based on the provided city
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
   
+    // Fetching weather data from the API
     fetch(apiUrl)
         .then(function(response) {
+            // Checking if the response is successful
             if (!response.ok) {
+                // If response is not okay, throw an error
                 throw new Error('City not found');
             }
+            // If response is okay, parse JSON data
             return response.json();
         })
         .then(function(data) {
+            // Extracting latitude and longitude from the response data
             const lat = data.coord.lat;
             const lon = data.coord.lon;
+            // Calling the getWeather function with latitude, longitude, and city
             getWeather(lat, lon, city);
+            // Adding the city to search history
             addToHistory(city);
         })
         .catch(function(error) {
+            // Handling errors that occurred during fetch operation
             console.error('There was a problem with the fetch operation:', error);
         });
 }
