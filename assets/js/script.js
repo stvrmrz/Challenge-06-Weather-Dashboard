@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
     // Display search history
     displaySearchHistory(searchHistory);
-
     // Add event listener to search form
     const searchForm = document.getElementById('search-form');
     searchForm.addEventListener('submit', function (event) {
@@ -23,7 +22,6 @@ function getCoordinates(city) {
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
     // URL for fetching weather data based on the provided city
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-
     // Fetching weather data from the API
     fetch(apiUrl)
         .then(function(response) {
@@ -55,7 +53,6 @@ function getCoordinates(city) {
 function getWeather(lat, lon, city) {
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-  
     fetch(apiUrl)
         .then(function(response) {
             if (!response.ok) {
@@ -75,7 +72,6 @@ function getWeather(lat, lon, city) {
 function displayWeather(data, city) {
     const weatherInfoDiv = document.getElementById('weather-info');
     weatherInfoDiv.innerHTML = ''; // Clear previous content
-  
     // Display current weather information
     const cityName = city;
     const currentWeather = data.list[0];
@@ -95,19 +91,23 @@ function displayWeather(data, city) {
         </div>
     `;
     weatherInfoDiv.innerHTML = weatherHtml;
-  }
+}
 
-    function saveToSearchHistory(city) {
-        const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+// This function saves a city to the search history in the browser's local storage, updating 
+// the displayed search history if the city is not already present.
+function saveToSearchHistory(city) {
+    const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
         if (!searchHistory.includes(city)) {
             searchHistory.push(city);
             localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
             displaySearchHistory(searchHistory);
         }
-      }
+}
 
-      function displaySearchHistory(history) {
-        const historyList = document.getElementById('history-list');
+// This function dynamically displays the search history as clickable list items on the webpage, 
+// triggering a weather data fetch for the selected city upon click.
+function displaySearchHistory(history) {
+const historyList = document.getElementById('history-list');
         historyList.innerHTML = '';
         history.forEach(city => {
             const li = document.createElement('li');
@@ -117,4 +117,4 @@ function displayWeather(data, city) {
             });
             historyList.appendChild(li);
         });
-      }
+}
