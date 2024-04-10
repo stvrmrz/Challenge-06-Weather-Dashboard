@@ -79,9 +79,11 @@ function displayWeather(data, city) {
     for (let i = 0; i < data.list.length; i += 8) {
         const forecast = data.list[i];
         const date = new Date(forecast.dt * 1000).toLocaleDateString();
-        const temperature = Math.round(forecast.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
+        const temperatureCelsius = Math.round(forecast.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
+        const temperatureFahrenheit = Math.round((temperatureCelsius * 9/5) + 32); // Convert Celsius to Fahrenheit
         const humidity = forecast.main.humidity;
-        const windSpeed = forecast.wind.speed;
+        const windSpeedMetersPerSecond = forecast.wind.speed; // Wind speed in meters per second
+        const windSpeedMilesPerHour = Math.round(windSpeedMetersPerSecond * 2.237); // Convert meters per second to miles per hour
         const weatherIcon = forecast.weather[0].icon;
         const weatherDescription = forecast.weather[0].description;
   
@@ -89,9 +91,9 @@ function displayWeather(data, city) {
         weatherHtml += `
             <div class="current-weather">
                 <h2>${cityName} (${date}) <img src="http://openweathermap.org/img/wn/${weatherIcon}.png" alt="${weatherDescription}"></h2>
-                <p>Temperature: ${temperature}°C</p>
+                <p>Temperature: ${temperatureFahrenheit}°F</p>
                 <p>Humidity: ${humidity}%</p>
-                <p>Wind Speed: ${windSpeed} m/s</p>
+                <p>Wind Speed: ${windSpeedMilesPerHour} mph</p>
             </div>
         `;
     }
