@@ -95,7 +95,7 @@ function displayWeather(data, city) {
     weatherInfoDiv.innerHTML = weatherHtml;
   }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {a
     const searchForm = document.getElementById('search-form');
     const historyList = document.getElementById('history-list');
 
@@ -116,35 +116,24 @@ document.addEventListener('DOMContentLoaded', function() {
         addToHistory(cityInput);
     });
 
-    // Function to add a city to the search history
-    function addToHistory(city) {
-        // Create a new list item
-        const listItem = document.createElement('li');
-        listItem.textContent = city;
+    function saveToSearchHistory(city) {
+        const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        if (!searchHistory.includes(city)) {
+            searchHistory.push(city);
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            displaySearchHistory(searchHistory);
+        }
+      }
 
-        // Add the list item to the history list
-        historyList.appendChild(listItem);
-
-        // Save the updated search history to local storage
-        saveHistory();
-    }
-
-    // Function to load search history from local storage
-    function loadHistory() {
-        const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
-        // Loop through the search history and add each city to the list
-        history.forEach(function(city) {
-            addToHistory(city);
+    function displaySearchHistory(history) {
+        const historyList = document.getElementById('history-list');
+        historyList.innerHTML = '';
+        history.forEach(city => {
+            const li = document.createElement('li');
+            li.textContent = city;
+            li.addEventListener('click', function () {
+                getCoordinates(city);
+            });
+            historyList.appendChild(li);
         });
-    }
-
-    // Function to save search history to local storage
-    function saveHistory() {
-        const historyItems = Array.from(historyList.children).map(function(item) {
-            return item.textContent;
-        });
-
-        localStorage.setItem('searchHistory', JSON.stringify(historyItems));
-    }
 });
