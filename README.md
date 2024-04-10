@@ -28,9 +28,9 @@ Weather Dashboard Demo
 This project was about creating a weather dashboard application that fetches data from a third party API. By making a request with specific parameters to a URL, we are able to extract the weather data we want to pull from the 5 Day Weather Forecast API.
 
 Here's why we're doing this:
-* This utilizes a lot of what we learned so far in our bootcamp, local storage, APIs, event listeners, etc
-* Deeper experience with APIs and how we use our API keys to fetch the data
-* Learn how to store data from third parties to local storage
+* This utilizes a lot of what we learned so far in our bootcamp like local storage, APIs, and event listeners, etc.
+* Deeper experience with APIs and how we use our API keys to fetch the data.
+* Learn how to store data from third party API to local storage and actually use them for something interesting. 
 
 
 <!-- GETTING STARTED -->
