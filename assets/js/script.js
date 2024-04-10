@@ -73,6 +73,8 @@ function displayWeather(data, city) {
     const weatherInfoDiv = document.getElementById('weather-info');
     weatherInfoDiv.innerHTML = ''; // Clear previous content
     const cityName = city;
+    let weatherHtml = ''; // Initialize a variable to store the HTML
+    
     // Loop through the data list to get the forecast for each day
     for (let i = 0; i < data.list.length; i += 8) {
         const forecast = data.list[i];
@@ -83,7 +85,8 @@ function displayWeather(data, city) {
         const weatherIcon = forecast.weather[0].icon;
         const weatherDescription = forecast.weather[0].description;
   
-        const weatherHtml = `
+        // Concatenate the HTML for each day's forecast
+        weatherHtml += `
             <div class="current-weather">
                 <h2>${cityName} (${date}) <img src="http://openweathermap.org/img/wn/${weatherIcon}.png" alt="${weatherDescription}"></h2>
                 <p>Temperature: ${temperature}°C</p>
@@ -91,8 +94,10 @@ function displayWeather(data, city) {
                 <p>Wind Speed: ${windSpeed} m/s</p>
             </div>
         `;
-        weatherInfoDiv.innerHTML = weatherHtml;
     }
+    
+    // Finally, set the inner HTML of weatherInfoDiv to the concatenated HTML
+    weatherInfoDiv.innerHTML = weatherHtml;
 }
 
 // This function saves a city to the search history in the browser's local storage, updating 
