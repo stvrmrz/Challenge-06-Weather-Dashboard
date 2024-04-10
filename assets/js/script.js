@@ -72,25 +72,27 @@ function getWeather(lat, lon, city) {
 function displayWeather(data, city) {
     const weatherInfoDiv = document.getElementById('weather-info');
     weatherInfoDiv.innerHTML = ''; // Clear previous content
-    // Display current weather information
     const cityName = city;
-    const currentWeather = data.list[0];
-    const date = new Date(currentWeather.dt * 1000).toLocaleDateString();
-    const temperature = Math.round(currentWeather.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
-    const humidity = currentWeather.main.humidity;
-    const windSpeed = currentWeather.wind.speed;
-    const weatherIcon = currentWeather.weather[0].icon;
-    const weatherDescription = currentWeather.weather[0].description;
+    // Loop through the data list to get the forecast for each day
+    for (let i = 0; i < data.list.length; i += 8) {
+        const forecast = data.list[i];
+        const date = new Date(forecast.dt * 1000).toLocaleDateString();
+        const temperature = Math.round(forecast.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
+        const humidity = forecast.main.humidity;
+        const windSpeed = forecast.wind.speed;
+        const weatherIcon = forecast.weather[0].icon;
+        const weatherDescription = forecast.weather[0].description;
   
-    const weatherHtml = `
-        <div class="current-weather">
-            <h2>${cityName} (${date}) <img src="http://openweathermap.org/img/wn/${weatherIcon}.png" alt="${weatherDescription}"></h2>
-            <p>Temperature: ${temperature}°C</p>
-            <p>Humidity: ${humidity}%</p>
-            <p>Wind Speed: ${windSpeed} m/s</p>
-        </div>
-    `;
-    weatherInfoDiv.innerHTML = weatherHtml;
+        const weatherHtml = `
+            <div class="current-weather">
+                <h2>${cityName} (${date}) <img src="http://openweathermap.org/img/wn/${weatherIcon}.png" alt="${weatherDescription}"></h2>
+                <p>Temperature: ${temperature}°C</p>
+                <p>Humidity: ${humidity}%</p>
+                <p>Wind Speed: ${windSpeed} m/s</p>
+            </div>
+        `;
+        weatherInfoDiv.innerHTML = weatherHtml;
+    }
 }
 
 // This function saves a city to the search history in the browser's local storage, updating 
