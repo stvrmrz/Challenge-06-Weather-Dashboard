@@ -1,13 +1,29 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // Load search history from localStorage
+    const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    // Display search history
+    displaySearchHistory(searchHistory);
+
+    // Add event listener to search form
+    const searchForm = document.getElementById('search-form');
+    searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const cityInput = document.getElementById('city-input').value.trim();
+        if (cityInput !== '') {
+            getCoordinates(cityInput);
+        }
+    });
+});
+
 // The function getCoordinates(city) fetches weather data for a specified city from the OpenWeatherMap 
 // API, extracts the latitude and longitude from the response, displays the weather information using 
 // the getWeather(lat, lon, city) function, and adds the city to the search history.
-
 function getCoordinates(city) {
     // API key for accessing OpenWeatherMap API
     const apiKey = 'b93acfb12967de0cf2063193b0042830';
     // URL for fetching weather data based on the provided city
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-  
+
     // Fetching weather data from the API
     fetch(apiUrl)
         .then(function(response) {
@@ -26,28 +42,14 @@ function getCoordinates(city) {
             // Calling the getWeather function with latitude, longitude, and city
             getWeather(lat, lon, city);
             // Adding the city to search history
-            addToHistory(city);
+            saveToSearchHistory(city);
         })
         .catch(function(error) {
             // Handling errors that occurred during fetch operation
             console.error('There was a problem with the fetch operation:', error);
         });
 }
-  
-document.addEventListener('DOMContentLoaded', function() {
-    const searchForm = document.getElementById('search-form');
 
-    // Add event listener to the form submission
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission behavior
-
-        // Get the city name entered by the user
-        const cityInput = document.getElementById('city-input').value.trim();
-
-        // Call the getCoordinates function with the city name
-        getCoordinates(cityInput);
-    });
-});
 // This function fetches weather data for a specified city using the OpenWeatherMap API
 // and displays the city name and current temperature in Fahrenheit.
 function getWeather(lat, lon, city) {
@@ -95,27 +97,6 @@ function displayWeather(data, city) {
     weatherInfoDiv.innerHTML = weatherHtml;
   }
 
-document.addEventListener('DOMContentLoaded', function() {a
-    const searchForm = document.getElementById('search-form');
-    const historyList = document.getElementById('history-list');
-
-    // Load search history from local storage when the page is loaded
-    loadHistory();
-
-    // Add event listener to the form submission
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission behavior
-
-        // Get the city name entered by the user
-        const cityInput = document.getElementById('city-input').value.trim();
-
-        // Call the getWeather function with the city name
-        getWeather(cityInput);
-
-        // Add the city to the search history
-        addToHistory(cityInput);
-    });
-
     function saveToSearchHistory(city) {
         const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
         if (!searchHistory.includes(city)) {
@@ -125,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {a
         }
       }
 
-    function displaySearchHistory(history) {
+      function displaySearchHistory(history) {
         const historyList = document.getElementById('history-list');
         historyList.innerHTML = '';
         history.forEach(city => {
@@ -136,4 +117,4 @@ document.addEventListener('DOMContentLoaded', function() {a
             });
             historyList.appendChild(li);
         });
-});
+      }
