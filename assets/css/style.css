@@ -1,19 +1,58 @@
+/* Set base styles for the body */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/* Style container for content */
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Center-align heading */
 h1 {
   text-align: center;
 }
 
+/* Add margin to weather info for spacing */
 #weather-info {
   margin-top: 20px;
+}
+
+/* Style search history section set it fixed */
+#search-history {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100vh;
+  margin-top: 77px;
+}
+
+/* Style heading inside search history */
+#search-history h2 {
+  margin-top: 0;
+}
+
+/* Style list for search history */
+#history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style individual items in search history list, namely the pointer */
+#history-list li {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Style when hovering over list items */
+#history-list li:hover {
+  background-color: #ddd;
 }
